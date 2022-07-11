@@ -4,6 +4,7 @@ public class MemberDto {
 	private String mem_id;
 	private String mem_pwd;
 	private String user_role;
+	private int auth;
 	
 	public MemberDto() {}
 
@@ -31,8 +32,17 @@ public class MemberDto {
 		this.user_role = user_role;
 	}
 
+	public int getAuth() {
+		return auth;
+	}
+
+	public void setAuth(int auth) {
+		this.auth = auth;
+	}
+
 	@Override
 	public String toString() {
-		return "MemberDto [mem_id=" + mem_id + ", mem_pwd=" + mem_pwd + ", user_role=" + user_role + "]";
+		return "MemberDto [mem_id=" + mem_id + ", mem_pwd=" + mem_pwd + ", user_role=" + user_role + ", auth=" + auth
+				+ "]";
 	}
 }

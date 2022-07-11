@@ -5,15 +5,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 <security:http auto-config='true' use-expressions="true">
-    <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+    <security:intercept-url pattern="/member/**" access="permitAll()" />
+    <security:intercept-url pattern="/board/**" access="hasRole('ROLE_ADMIN')" />
 </security:http>
-<security:authentication-manager>
+
+<!--  <security:authentication-manager>
     <security:authentication-provider>
         <security:user-service>
-            <security:user name="admin" password="123"
-                authorities="ROLE_USER, ROLE_ADMIN" />
+            <security:user name="admin" password="123" authorities="ROLE_ADMIN" />
             <security:user name="guest" password="123" authorities="ROLE_USER" />
         </security:user-service>
     </security:authentication-provider>
-</security:authentication-manager>
+</security:authentication-manager> -->
 </beans>

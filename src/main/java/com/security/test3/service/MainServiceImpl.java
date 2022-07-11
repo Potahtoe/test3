@@ -34,14 +34,20 @@ public class MainServiceImpl implements MainService{
 		//jsp에서 넘긴 id와 pwd 값을 dto에 담는다
 		dto.setMem_id(req.getParameter("mem_id"));
 		dto.setMem_pwd(req.getParameter("mem_pwd"));
-		
+		dto.setAuth(Integer.parseInt(req.getParameter("auth")));
+		if(Integer.parseInt(req.getParameter("auth"))==1) {
+			dto.setUser_role("ROLE_ADMIN"); 
+		}else { 
+			dto.setUser_role("ROLE_USER");
+		}
 		System.out.println("파라미터 mem_id : " + req.getParameter("mem_id"));
 		System.out.println("파라미터 mem_pwd : " + req.getParameter("mem_pwd"));
+		System.out.println("파라미터 auth : " + Integer.parseInt(req.getParameter("auth")));
 		
 		//dao를 통해 db에 저장
 		int insertCnt = dao.signInAction(dto);
-		
 		System.out.println("insertCnt : " + insertCnt);
+		
 		//jsp로 결과 보내주기(signInAction.jsp)
 		model.addAttribute("insertCnt", insertCnt);
 	}

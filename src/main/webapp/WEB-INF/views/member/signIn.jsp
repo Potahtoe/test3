@@ -24,6 +24,10 @@
 				</td>
 			</tr>
 			<tr>
+				<td><input type="radio" name="auth" value="1"> ADMIN</td>
+				<td><input type="radio" name="auth" value="0" checked> USER</td>
+			</tr>
+			<tr>
 				<td colspan="2" align="right">
 					<input type="submit" name="signIn" value="회원가입">
 				</td>

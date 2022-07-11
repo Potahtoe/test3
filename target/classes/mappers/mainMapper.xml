@@ -10,11 +10,15 @@
 		(
 			mem_id
 			,mem_pwd
+			,user_role
+			,auth
 		)
 		values
 		(
 			#{mem_id}
 			,#{mem_pwd}
+			,#{user_role}
+			,#{auth}
 		)
 	</insert>
 
