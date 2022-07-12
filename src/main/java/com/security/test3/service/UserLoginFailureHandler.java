@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+//로그인 실패
 public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 
 	@Autowired
@@ -35,7 +36,9 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 		map.put("strPwd", strPwd);
 		
 		int cnt = sqlSession.selectOne("com.security.test3.dao.MainDao.idPwdCheck", map);
-		request.setAttribute("errorMsg", "로그인 정보가 일치하지 않습니다.");
+		if(cnt!=1) {
+			request.setAttribute("errorMsg", "로그인 정보가 일치하지 않습니다.");
+		}
 		RequestDispatcher dispatcher= request.getRequestDispatcher("/WEB-INF/views/member/login.jsp");
 		dispatcher.forward(request, response);
 	}

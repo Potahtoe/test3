@@ -128,5 +128,17 @@ public class MainDaoImpl implements MainDao{
 		return dao.boardSearch(map);
 	}
 
+	@Override
+	public MemberDto selectId(String strId) {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.selectId(strId);
+	}
+
+	@Override
+	public String authorityCheck() {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.authorityCheck();
+	}
+
 
 }

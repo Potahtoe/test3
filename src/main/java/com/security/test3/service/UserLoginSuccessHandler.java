@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import com.security.test3.dto.UserVO;
 
+//로그인 성공
 public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Autowired
@@ -37,9 +38,9 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		request.getSession().setAttribute("sessionID", authentication.getName()); //세션추가
 		request.getSession().setAttribute("authority", authority);
 		
-		int grade = 0;
+		int grade=0;
 		if(authority.equals("ROLE_ADMIN")) {
-			grade=1; //고객 로그인 시
+			grade=1;
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.do");
 			dispatcher.forward(request, response);
 		}

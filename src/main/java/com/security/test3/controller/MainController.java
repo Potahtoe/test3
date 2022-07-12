@@ -71,6 +71,15 @@ public class MainController {
 			service.loginAction(req, model);
 			return "member/loginAction";
 		}
+		
+		//로그인 처리
+		@RequestMapping("logout.do")
+		public String logout(HttpServletRequest req) {
+			logger.info("로그아웃");
+			
+			req.getSession().invalidate();
+			return "member/login";
+		}
 				
 		//------------게시판------------------
 		//게시판 목록 조회

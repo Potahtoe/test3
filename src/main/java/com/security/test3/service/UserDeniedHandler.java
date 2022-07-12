@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
+//접근 권한
 public class UserDeniedHandler implements AccessDeniedHandler {
 
 	@Override

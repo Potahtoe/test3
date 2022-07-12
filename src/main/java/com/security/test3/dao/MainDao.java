@@ -40,7 +40,12 @@ public interface MainDao {
 	public List<BoardDto> boardSearch(Map<String,Object> map);
 	
 	//-------시큐리티-----------
-	//
+	//로그인 체크(db에 있는 아이디 불러오기)
+	public MemberDto selectId(String strId);
+	//권한 불러오기
+	public String authorityCheck();
+	
+	
 	
 	
 }

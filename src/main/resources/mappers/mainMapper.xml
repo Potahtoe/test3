@@ -10,15 +10,11 @@
 		(
 			mem_id
 			,mem_pwd
-			,user_role
-			,auth
 		)
 		values
 		(
 			#{mem_id}
 			,#{mem_pwd}
-			,#{user_role}
-			,#{auth}
 		)
 	</insert>
 
@@ -123,5 +119,19 @@
 		order by board_no desc
 		limit 	10
 		offset #{start}
+	</select>
+	
+	<!-- 시큐리티 -->
+	<!-- 로그인 체크 -->
+	<select id="selectId" parameterType="String" resultType="com.security.test3.dto.MemberDto">
+		select 	*
+		from	member_tbl
+		where	mem_id=#{strId}
+	</select>
+	<!-- 권한 불러오기 -->
+	<select id="authorityCheck" resultType="String">
+		select	authority
+		from	member_tbl
+		where	mem_id=#{mem_id}
 	</select>
 </mapper>

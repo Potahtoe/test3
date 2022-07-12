@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.security.test3.dto.MemberDto;
 import com.security.test3.dto.UserVO;
 
+//로그인 시 인증
 public class UserAuthenticationService implements UserDetailsService{
 
 	@Autowired
@@ -25,7 +26,7 @@ public class UserAuthenticationService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String mem_id) throws UsernameNotFoundException {
 		System.out.println("<<<UserAuthenticationService - loadUserByUsername 진입 >>>");
-		MemberDto dto = sqlSession.selectOne("com.security.test3.dao.MainDao.selectCustomer", mem_id);
+		MemberDto dto = sqlSession.selectOne("com.security.test3.dao.MainDao.selectId", mem_id);
 		System.out.println("로그인 체크 ==> " + dto);
 		
 		//로그인 인증 실패 시 인위적으로 예외 생성해서 던진다.
