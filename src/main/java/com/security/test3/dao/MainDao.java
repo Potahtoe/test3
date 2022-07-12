@@ -39,4 +39,8 @@ public interface MainDao {
 	//게시판 검색
 	public List<BoardDto> boardSearch(Map<String,Object> map);
 	
+	//-------시큐리티-----------
+	//
+	
+	
 }

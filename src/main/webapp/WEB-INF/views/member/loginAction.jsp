@@ -19,7 +19,7 @@
 	<c:if test="${selectCnt!=1}">
 		<script type="text/javascript">
 			location.href="${path}/login.do";
-		</script>		
+		</script>
 	</c:if>
 </div>
 </body>

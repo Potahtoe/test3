@@ -3,8 +3,8 @@ package com.security.test3.dto;
 public class MemberDto {
 	private String mem_id;
 	private String mem_pwd;
-	private String user_role;
-	private int auth;
+	private String authority;
+	private String enabled;
 	
 	public MemberDto() {}
 
@@ -24,25 +24,26 @@ public class MemberDto {
 		this.mem_pwd = mem_pwd;
 	}
 
-	public String getUser_role() {
-		return user_role;
+	public String getAuthority() {
+		return authority;
 	}
 
-	public void setUser_role(String user_role) {
-		this.user_role = user_role;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
-	public int getAuth() {
-		return auth;
+	public String getEnabled() {
+		return enabled;
 	}
 
-	public void setAuth(int auth) {
-		this.auth = auth;
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override
 	public String toString() {
-		return "MemberDto [mem_id=" + mem_id + ", mem_pwd=" + mem_pwd + ", user_role=" + user_role + ", auth=" + auth
-				+ "]";
+		return "MemberDto [mem_id=" + mem_id + ", mem_pwd=" + mem_pwd + ", authority=" + authority + ", enabled="
+				+ enabled + "]";
 	}
+
 }
