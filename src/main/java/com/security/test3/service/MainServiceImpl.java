@@ -23,7 +23,7 @@ public class MainServiceImpl implements MainService{
 	MainDao dao;
 	
 	//---------------회원가입--------------------
-	//회원가입 처리
+	//회원가입 처리 (시큐리티 적용 후 수정)
 	@Override
 	public void signInAction(HttpServletRequest req, Model model) {
 		System.out.println("서비스 - 회원가입 처리");
@@ -34,15 +34,18 @@ public class MainServiceImpl implements MainService{
 		//jsp에서 넘긴 id와 pwd 값을 dto에 담는다
 		dto.setMem_id(req.getParameter("mem_id"));
 		dto.setMem_pwd(req.getParameter("mem_pwd"));
-		dto.setEnabled(req.getParameter("enabled"));
-		if(Integer.parseInt(req.getParameter("enabled"))==1) {
-			dto.setAuthority("ROLE_ADMIN"); 
-		}else { 
-			dto.setAuthority("ROLE_USER");
+		//enabled값
+		String enabled = req.getParameter("enabled");
+		dto.setEnabled(enabled);
+		if(Integer.parseInt(enabled)==1) {
+			int updateCnt = dao.updateGrade(enabled);
+			model.addAttribute("updateCnt", updateCnt);
+			System.out.println("updateCnt : " + updateCnt);
 		}
 		System.out.println("파라미터 mem_id : " + req.getParameter("mem_id"));
 		System.out.println("파라미터 mem_pwd : " + req.getParameter("mem_pwd"));
-		System.out.println("파라미터 enabled : " + req.getParameter("enabled"));
+		System.out.println("파라미터 enabled : " + enabled);
+		System.out.println("dto : " + dto);
 		
 		//dao를 통해 db에 저장
 		int insertCnt = dao.signInAction(dto);

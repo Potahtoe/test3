@@ -45,5 +45,4 @@ public class MemberDto {
 		return "MemberDto [mem_id=" + mem_id + ", mem_pwd=" + mem_pwd + ", authority=" + authority + ", enabled="
 				+ enabled + "]";
 	}
-
 }

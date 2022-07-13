@@ -12,7 +12,7 @@
 			location.href="${path}/signIn.do";
 		});
 		$("#login").click(function(){
-			document.form.action="${path}/loginAction.do";
+			document.form.action="${path}/login_check.do";
 			document.form.submit();
 		})
 	});
@@ -21,6 +21,7 @@
 <body>
 	<h3 align="center">로그인</h3>
 	<form method="post" name="form">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<table align="center">
 			<tr>
 				<th>아이디</th>

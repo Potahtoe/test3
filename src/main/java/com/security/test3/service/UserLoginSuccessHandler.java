@@ -38,10 +38,9 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		request.getSession().setAttribute("sessionID", authentication.getName()); //세션추가
 		request.getSession().setAttribute("authority", authority);
 		
-		int grade=0;
 		if(authority.equals("ROLE_ADMIN")) {
-			grade=1;
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.do");
+			//int grade=1;
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.bd");
 			dispatcher.forward(request, response);
 		}
 	}

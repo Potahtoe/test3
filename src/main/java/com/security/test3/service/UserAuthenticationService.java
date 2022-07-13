@@ -24,13 +24,13 @@ public class UserAuthenticationService implements UserDetailsService{
 		this.sqlSession = sqlSession;
 	}
 	@Override
-	public UserDetails loadUserByUsername(String mem_id) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String strId) throws UsernameNotFoundException {
 		System.out.println("<<<UserAuthenticationService - loadUserByUsername 진입 >>>");
-		MemberDto dto = sqlSession.selectOne("com.security.test3.dao.MainDao.selectId", mem_id);
+		MemberDto dto = sqlSession.selectOne("com.security.test3.dao.MainDao.selectId", strId);
 		System.out.println("로그인 체크 ==> " + dto);
 		
 		//로그인 인증 실패 시 인위적으로 예외 생성해서 던진다.
-		if(dto ==null) throw new UsernameNotFoundException(mem_id);
+		if(dto ==null) throw new UsernameNotFoundException(strId);
 		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
 		authority.add(new SimpleGrantedAuthority(dto.getAuthority())); //default 'ROLE_USER'
 		

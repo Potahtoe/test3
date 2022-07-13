@@ -4,28 +4,29 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-<security:http auto-config='true' use-expressions="true">
-    <security:intercept-url pattern="/member/**" access="permitAll()" />
-    <security:intercept-url pattern="/board/**" access="hasRole('ROLE_ADMIN')" />
-    
-    	<!-- 로그인폼 -->
-	<!-- login.do -> login_check.do -> UserAuthenticationService -> 성공 / 실패/ 거부-->
-	<!-- 5개 설정을 소스와 일치시켜야 한다. -->
-	<security:form-login login-page="/login.do" 
-						login-processing-url="/login_check.do"
-						authentication-success-handler-ref="userLoginSuccessHandler"
-						authentication-failure-handler-ref="userLoginFailureHandler"
-						username-parameter="id" password-parameter="password" />
-	
-	<security:session-management>
-	<!-- 같은 브라우저에서 여러창 동시접속 수 / 세션만료시 이동할 주소 / 최대 세션 초과 시 에러 옵션 -->
-		<security:concurrency-control max-sessions="2"
-			expired-url="/login.do"
-			error-if-maximum-exceeded="true"/>
-	</security:session-management>
-	
-	<!-- 접근 권한이 없는 경우 작동 -->
-	<security:access-denied-handler ref="userDeniedHandler"/>
+	<security:http auto-config='true' use-expressions="true" create-session="never">
+	    <security:intercept-url pattern="*.do" access="permitAll" />
+	    <security:intercept-url pattern="/**.bd" access="hasRole('ROLE_ADMIN')" />
+	    
+	    	<!-- 로그인폼 -->
+		<!-- login.do -> login_check.do -> UserAuthenticationService -> 성공 / 실패/ 거부-->
+		<!-- 5개 설정을 소스와 일치시켜야 한다. -->
+		<security:form-login login-page="/login.do" 
+							login-processing-url="/login_check.do"
+							authentication-success-handler-ref="userLoginSuccessHandler"
+							authentication-failure-handler-ref="userLoginFailureHandler"
+							username-parameter="id" password-parameter="password" />
+		
+		<security:session-management>
+		<!-- 같은 브라우저에서 여러창 동시접속 수 / 세션만료시 이동할 주소 / 최대 세션 초과 시 에러 옵션 -->
+			<security:concurrency-control max-sessions="2"
+				expired-url="/login.do"
+				error-if-maximum-exceeded="true"/>
+		</security:session-management>
+		
+		<!-- 접근 권한이 없는 경우 작동 -->
+		<security:access-denied-handler ref="userDeniedHandler"/>
+	</security:http>
 
 	<!-- 로그인 성공 시 작동 -->
 	<bean id="userLoginSuccessHandler" class="com.security.test3.service.UserLoginSuccessHandler">
@@ -42,17 +43,9 @@
 	
 	<!-- 로그인 인증처리 클래스 -->
 	<!-- login-processing-url="/login_check.do"에 의해 자동호출 -->
+	
 	<bean id="userService" class="com.security.test3.service.UserAuthenticationService">
-	 <constructor-arg name="sqlSession" ref="sqlSession" />
+		<constructor-arg name="sqlSession" ref="sqlSession" />
 	</bean>
-</security:http>
 
-<!--  <security:authentication-manager>
-    <security:authentication-provider>
-        <security:user-service>
-            <security:user name="admin" password="123" authorities="ROLE_ADMIN" />
-            <security:user name="guest" password="123" authorities="ROLE_USER" />
-        </security:user-service>
-    </security:authentication-provider>
-</security:authentication-manager> -->
 </beans>

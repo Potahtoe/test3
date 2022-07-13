@@ -10,6 +10,7 @@
 <body>
 	<h3 align="center">회원가입</h3>
 	<form method="post" name="form" action="${path}/signInAction.do">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<table align="center">
 			<tr>
 				<th>아이디</th>
@@ -24,8 +25,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="auth" value="1"> ADMIN</td>
-				<td><input type="radio" name="auth" value="0" checked> USER</td>
+				<td><input type="radio" name="enabled" value="1"> ADMIN</td>
+				<td><input type="radio" name="enabled" value="0" checked> USER</td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right">

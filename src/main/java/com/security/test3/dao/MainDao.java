@@ -9,6 +9,14 @@ import com.security.test3.dto.MemberDto;
 
 public interface MainDao {
 	
+	//-------시큐리티-----------
+	//로그인 체크(db에 있는 아이디 불러오기)
+	public MemberDto selectId(String strId);
+	//권한 불러오기
+	public String authorityCheck();
+	//권한 업데이트
+	public int updateGrade(String enabled);
+	
 	//-------회원가입---------
 	//회원가입 처리
 	public int signInAction(MemberDto dto);
@@ -38,13 +46,7 @@ public interface MainDao {
 	public int searchCnt(String searchContent);
 	//게시판 검색
 	public List<BoardDto> boardSearch(Map<String,Object> map);
-	
-	//-------시큐리티-----------
-	//로그인 체크(db에 있는 아이디 불러오기)
-	public MemberDto selectId(String strId);
-	//권한 불러오기
-	public String authorityCheck();
-	
+
 	
 	
 	

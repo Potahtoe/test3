@@ -16,14 +16,34 @@ public class MainDaoImpl implements MainDao{
 	@Autowired
 	SqlSession sqlSession;
 	
+	//-----------시큐리티-------------
+	//로그인 체크(db에 있는 아이디 불러오기)
+	@Override
+	public MemberDto selectId(String strId) {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.selectId(strId);
+	}
+	//권한 불러오기
+	@Override
+	public String authorityCheck() {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.authorityCheck();
+	}
+	//권한 업데이트
+	@Override
+	public int updateGrade(String enabled) {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.updateGrade(enabled);
+	}
+	
 	//-----------회원가입-------------
 	//회원가입 처리
 	@Override
 	public int signInAction(MemberDto dto) {
 		System.out.println("dao - 회원가입 처리");
 		
-		int insertCnt = sqlSession.insert("com.spring.test.dao.MainDao.signInAction", dto);
-		return insertCnt;
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.signInAction(dto);
 	}
 
 	//-----------로그인-------------
@@ -32,8 +52,8 @@ public class MainDaoImpl implements MainDao{
 	public int idPwdCheck(Map<String, Object> map) {
 		System.out.println("dao - 로그인 확인");
 		
-		int selectCnt = sqlSession.selectOne("com.spring.test.dao.MainDao.idPwdCheck", map);
-		return selectCnt;
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.idPwdCheck(map);
 	}
 	
 	//-----------게시글-------------
@@ -128,17 +148,7 @@ public class MainDaoImpl implements MainDao{
 		return dao.boardSearch(map);
 	}
 
-	@Override
-	public MemberDto selectId(String strId) {
-		MainDao dao = sqlSession.getMapper(MainDao.class);
-		return dao.selectId(strId);
-	}
 
-	@Override
-	public String authorityCheck() {
-		MainDao dao = sqlSession.getMapper(MainDao.class);
-		return dao.authorityCheck();
-	}
 
 
 }
