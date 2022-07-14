@@ -9,10 +9,12 @@ public interface MainService {
 	//----------회원가입---------
 	//회원가입 처리
 	public void signInAction(HttpServletRequest req, Model model);
+	public void updateGrade(HttpServletRequest req, Model model);
 	
 	//----------로그인---------
-	//로그인 처리
-	public void loginAction(HttpServletRequest req, Model model);
+	/*
+	 * //로그인 처리 public void loginAction(HttpServletRequest req, Model model);
+	 */
 	
 	//----------게시판---------
 	//게시판 목록 조회

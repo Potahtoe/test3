@@ -17,6 +17,18 @@ public class MainDaoImpl implements MainDao{
 	SqlSession sqlSession;
 	
 	//-----------시큐리티-------------
+	//아이디 체크
+	@Override
+	public int idCheck(String strId) {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.idCheck(strId);
+	}
+	//비밀번호 체크
+	@Override
+	public String pwdCheck(String strId) {
+		MainDao dao = sqlSession.getMapper(MainDao.class);
+		return dao.pwdCheck(strId);
+	}
 	//로그인 체크(db에 있는 아이디 불러오기)
 	@Override
 	public MemberDto selectId(String strId) {
@@ -47,14 +59,15 @@ public class MainDaoImpl implements MainDao{
 	}
 
 	//-----------로그인-------------
-	//로그인 확인
-	@Override
-	public int idPwdCheck(Map<String, Object> map) {
-		System.out.println("dao - 로그인 확인");
-		
-		MainDao dao = sqlSession.getMapper(MainDao.class);
-		return dao.idPwdCheck(map);
-	}
+	/*
+	 * //로그인 확인
+	 * 
+	 * @Override public int idPwdCheck(Map<String, Object> map) {
+	 * System.out.println("dao - 로그인 확인");
+	 * 
+	 * MainDao dao = sqlSession.getMapper(MainDao.class); return
+	 * dao.idPwdCheck(map); }
+	 */
 	
 	//-----------게시글-------------
 	//게시글 수
@@ -147,8 +160,4 @@ public class MainDaoImpl implements MainDao{
 		MainDao dao = sqlSession.getMapper(MainDao.class);
 		return dao.boardSearch(map);
 	}
-
-
-
-
 }

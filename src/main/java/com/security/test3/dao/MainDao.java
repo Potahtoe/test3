@@ -10,6 +10,10 @@ import com.security.test3.dto.MemberDto;
 public interface MainDao {
 	
 	//-------시큐리티-----------
+	//아이디 체크
+	public int idCheck(String strId);
+	//패스워드 체크
+	public String pwdCheck(String strId);
 	//로그인 체크(db에 있는 아이디 불러오기)
 	public MemberDto selectId(String strId);
 	//권한 불러오기
@@ -22,8 +26,9 @@ public interface MainDao {
 	public int signInAction(MemberDto dto);
 	
 	//-------로그인---------
-	//로그인 확인
-	public int idPwdCheck(Map<String,Object> map);
+	/*
+	 * //로그인 확인 public int idPwdCheck(Map<String,Object> map);
+	 */
 	
 	//-------게시판---------
 	//게시글 수

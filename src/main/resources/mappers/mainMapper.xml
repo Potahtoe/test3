@@ -4,11 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.security.test3.dao.MainDao">
 	<!-- 시큐리티 -->
+  	<!-- ID 중복확인 처리 --> <!-- resultType="Integer"일 경우 사용-->
+  	<select id="idCheck" parameterType="String" resultType="int"> <!-- public int idCheck(String strId) {} -->
+  		select	count(*)
+  		from	member_tbl
+  		where	mem_id = #{strId}
+  		<!-- resultType="Integer"이면  COUNT(*)로 형을 맞춰줘야 한다. -->
+  	</select>
+  	<!-- 시큐리티 - pwdCheck -->
+  	<select id="pwdCheck" parameterType="String" resultType="String">
+  		select	mem_pwd
+  		from	member_tbl
+  		where	mem_id = #{strId}
+  	</select>
 	<!-- 로그인 체크 -->
 	<select id="selectId" parameterType="String" resultType="com.security.test3.dto.MemberDto">
 		select 	*
 		from	member_tbl
-		where	mem_id = #{strId}
+		where	mem_id = #{mem_id}
 	</select>
 	<!-- 권한 불러오기 -->
 	<select id="authorityCheck" resultType="String">
@@ -21,7 +34,7 @@
 		update	member_tbl
 		set		authority='ROLE_ADMIN'
 		where	mem_id = #{mem_id}
-		and		enabled = 1
+		and		enabled = '1'
 	</update>
 	<!-- 회원가입 -->
 	<!-- 회원가입 처리 -->

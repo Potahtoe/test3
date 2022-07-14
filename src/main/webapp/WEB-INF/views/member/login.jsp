@@ -19,6 +19,11 @@
 </script>
 </head>
 <body>
+	<c:if test="${errorMsg!=null}">
+		<script type="text/javascript">
+			alert("${errorMsg}");
+		</script>
+	</c:if>
 	<h3 align="center">로그인</h3>
 	<form method="post" name="form">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">

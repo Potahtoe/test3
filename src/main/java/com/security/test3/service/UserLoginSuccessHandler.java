@@ -31,16 +31,16 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		UserVO vo =(UserVO)authentication.getPrincipal();
 		System.out.println("UserVO : " + vo.getUsername());
 		
-		String msg = authentication.getName() + "님 환영합니다.";
-		String authority = sqlSession.selectOne("com.security.test3.dao.CustomerDAO.authorityCheck", authentication.getName());
+		/* String msg = authentication.getName() + "님 환영합니다."; */
+		String authority = sqlSession.selectOne("com.security.test3.dao.MainDao.authorityCheck", authentication.getName());
 		
-		request.setAttribute("msg", msg);
+		/* request.setAttribute("msg", msg); */
 		request.getSession().setAttribute("sessionID", authentication.getName()); //세션추가
 		request.getSession().setAttribute("authority", authority);
 		
 		if(authority.equals("ROLE_ADMIN")) {
 			//int grade=1;
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.bd");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.do");
 			dispatcher.forward(request, response);
 		}
 	}

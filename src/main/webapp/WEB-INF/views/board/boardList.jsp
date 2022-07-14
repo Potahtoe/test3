@@ -21,6 +21,7 @@
 <body>
 	<h3 align="center">게시판 목록</h3>
 	<form method="post" name="form">
+	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 		<table align="center">
 			<tr>
 				<td colspan="5" align="right">

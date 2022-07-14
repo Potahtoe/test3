@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 //로그인 실패
@@ -20,8 +21,12 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
-	public UserLoginFailureHandler(SqlSessionTemplate sqlSession) {
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder; //비밀번호 암호화 클래스
+	
+	public UserLoginFailureHandler(SqlSessionTemplate sqlSession, BCryptPasswordEncoder passwordEncoder) {
 		this.sqlSession=sqlSession;
+		this.passwordEncoder=passwordEncoder;
 	}
 	
 	@Override
@@ -31,13 +36,25 @@ public class UserLoginFailureHandler implements AuthenticationFailureHandler {
 		
 		String strId = request.getParameter("mem_id");
 		String strPwd = request.getParameter("mem_pwd");
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("strId", strId);
-		map.put("strPwd", strPwd);
 		
-		int cnt = sqlSession.selectOne("com.security.test3.dao.MainDao.idPwdCheck", map);
-		if(cnt!=1) {
-			request.setAttribute("errorMsg", "로그인 정보가 일치하지 않습니다.");
+		int cnt = sqlSession.selectOne("com.security.test3.dao.MainDao.idCheck", strId);
+		if(cnt!=0) {
+			//암호화된 비밀번호 가져오기
+			String encryptPassword = sqlSession.selectOne("com.security.test3.dao.MainDao.pwdCheck", strId);
+			System.out.println("암호화 된 비밀번호 : " + encryptPassword);
+			System.out.println("화면에서 입력받은 비밀번호 : " + strPwd);
+			
+			//입력한 비밀번호와 가입된 비밀번호(암호화된 비밀번호)가 일치하는지 여부
+			if(passwordEncoder.matches(strPwd, encryptPassword)) {
+				request.setAttribute("errorMsg", "접근 권한이 없습니다.");
+			}else {
+				System.out.println("<<< 비밀번호 불일치 >>>");
+				request.setAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
+			}
+			
+		}else {
+			System.out.println("아이디 불일치");
+			request.setAttribute("errorMsg", "아이디가 일치하지 않습니다.");
 		}
 		RequestDispatcher dispatcher= request.getRequestDispatcher("/WEB-INF/views/member/login.jsp");
 		dispatcher.forward(request, response);
