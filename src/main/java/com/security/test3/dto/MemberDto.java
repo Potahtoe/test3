@@ -1,10 +1,10 @@
 package com.security.test3.dto;
 
 public class MemberDto {
-	private String mem_id;
-	private String mem_pwd;
-	private String authority;
-	private String enabled;
+	private String mem_id; //아이디
+	private String mem_pwd; //비밀번호
+	private String authority; // ROLE_ADMIN / ROLE_USER
+	private String enabled; // 1 / 0
 	
 	public MemberDto() {}
 

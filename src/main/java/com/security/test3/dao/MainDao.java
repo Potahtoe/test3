@@ -19,16 +19,13 @@ public interface MainDao {
 	//권한 불러오기
 	public String authorityCheck();
 	//권한 업데이트
-	public int updateGrade(String enabled);
+	public int updateGrade(String mem_id);
 	
 	//-------회원가입---------
 	//회원가입 처리
 	public int signInAction(MemberDto dto);
 	
-	//-------로그인---------
-	/*
-	 * //로그인 확인 public int idPwdCheck(Map<String,Object> map);
-	 */
+	//기존의 idPwdCheck는 비밀번호 암호화로 인해 idCheck와 pwdCheck로 분리하여 사용
 	
 	//-------게시판---------
 	//게시글 수

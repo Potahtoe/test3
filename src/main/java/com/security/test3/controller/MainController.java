@@ -65,15 +65,6 @@ public class MainController {
 			return "member/login";
 		}
 		
-		/*
-		 * //로그인 처리
-		 * 
-		 * @RequestMapping("loginAction.do") public String
-		 * loginAction(HttpServletRequest req, Model model) { logger.info("로그인 처리");
-		 * 
-		 * service.loginAction(req, model); return "member/loginAction"; }
-		 */
-		
 		//로그아웃 처리
 		@RequestMapping("logout.do")
 		public String logout(HttpServletRequest req) {

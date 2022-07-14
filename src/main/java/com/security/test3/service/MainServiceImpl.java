@@ -1,12 +1,14 @@
 package com.security.test3.service;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,8 @@ import com.security.test3.page.Paging;
 
 @Service
 public class MainServiceImpl implements MainService{
-
+	private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.class);
+	
 	@Autowired
 	MainDao dao;
 	
@@ -30,7 +33,7 @@ public class MainServiceImpl implements MainService{
 	//회원가입 처리 (시큐리티 적용 후 수정)
 	@Override
 	public void signInAction(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 회원가입 처리");
+		logger.info("서비스 - 회원가입 처리");
 		
 		//dto 바구니 생성
 		MemberDto dto = new MemberDto();
@@ -44,14 +47,9 @@ public class MainServiceImpl implements MainService{
 		String enabled = req.getParameter("enabled");
 		dto.setEnabled(enabled);
 
-		System.out.println("파라미터 mem_id : " + req.getParameter("mem_id"));
-		System.out.println("파라미터 mem_pwd : " + req.getParameter("mem_pwd"));
-		System.out.println("파라미터 enabled : " + enabled);
-		System.out.println("dto : " + dto);
-		
 		//dao를 통해 db에 저장
 		int insertCnt = dao.signInAction(dto);
-		System.out.println("insertCnt : " + insertCnt);
+		logger.info("insertCnt : " + insertCnt);
 		
 		//jsp로 결과 보내주기(signInAction.jsp)
 		model.addAttribute("insertCnt", insertCnt);
@@ -62,45 +60,25 @@ public class MainServiceImpl implements MainService{
 	//권한 업데이트
 	@Override
 	public void updateGrade(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 권한 업데이트");
+		logger.info("서비스 - 권한 업데이트");
+		
 		String enabled = req.getParameter("enabled");
-		System.out.println("파라미터 enabled : " + enabled);
+		String mem_id = req.getParameter("mem_id");
+		
 		if(enabled.equals("1")) {
-			System.out.println("enabled : " + enabled.equals("1"));
-			int updateCnt = dao.updateGrade(enabled);
+			logger.info("enabled : " + enabled.equals("1"));
+			int updateCnt = dao.updateGrade(mem_id);
 			model.addAttribute("updateCnt", updateCnt);
-			System.out.println("updateCnt : " + updateCnt);
 		}
 	}
-	//---------------로그인--------------------
-	/*
-	 * //로그인 처리
-	 * 
-	 * @Override public void loginAction(HttpServletRequest req, Model model) {
-	 * System.out.println("서비스 - 로그인 처리");
-	 * 
-	 * //id와 pwd 입력 받기 String strId = req.getParameter("mem_id"); String strPwd =
-	 * req.getParameter("mem_pwd");
-	 * 
-	 * //두 값을 넘기기 위해 hashmap에 담아주기 Map<String,Object> map = new
-	 * HashMap<String,Object>(); map.put("strId", strId); map.put("strPwd", strPwd);
-	 * 
-	 * System.out.println("map : " + map);
-	 * 
-	 * //dao를 통해 db에 있는 id/pwd 정보와 일치하는지 비교하기 int selectCnt = dao.idPwdCheck(map);
-	 * System.out.println("로그인 처리 selectCnt : " + selectCnt); //일치하면 입력된 id를 세션id로
-	 * 설정해주기 if(selectCnt==1) { HttpSession session = req.getSession();
-	 * session.setAttribute("sessionID", strId); }
-	 * System.out.println("로그인 처리 selectCnt : " + selectCnt);
-	 * 
-	 * //위에서 구한 값을 jsp로 넘겨주기 model.addAttribute("selectCnt", selectCnt); }
-	 */
+	
+	//loginAction은 security-context.xml에 설정해둔 login_check.do가 대신 처리하므로 관련 메서드 삭제
 	
 	//---------------게시판--------------------
 	//게시판 목록 조회
 	@Override
 	public void boardList(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 목록 조회");
+		logger.info("서비스 - 게시판 목록 조회");
 		
 		String pageNum = req.getParameter("pageNum");
 		Paging paging = new Paging(pageNum);
@@ -128,7 +106,7 @@ public class MainServiceImpl implements MainService{
 	//게시판 등록 처리
 	@Override
 	public void boardInsertAction(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 등록 처리");
+		logger.info("서비스 - 게시판 등록 처리");
 		
 		//dto 바구니 생성
 		BoardDto dto = new BoardDto();
@@ -140,7 +118,7 @@ public class MainServiceImpl implements MainService{
 		
 		//dao를 통해 db에 저장
 		int insertCnt = dao.boardInsertAction(dto);
-		System.out.println("insertCnt : " + insertCnt);
+		logger.info("insertCnt : " + insertCnt);
 		
 		//jsp로 처리 결과 전달
 		model.addAttribute("insertCnt", insertCnt);
@@ -149,7 +127,7 @@ public class MainServiceImpl implements MainService{
 	//게시판 상세 조회
 	@Override
 	public void boardDetail(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 상세 조회");
+		logger.info("서비스 - 게시판 상세 조회");
 		
 		//화면에서 게시글 번호 받아오기
 		String pageNum = req.getParameter("crtPage");
@@ -171,7 +149,7 @@ public class MainServiceImpl implements MainService{
 	//게시판 수정 화면
 	@Override
 	public void boardUpdate(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 수정 화면");
+		logger.info("서비스 - 게시판 수정 화면");
 		
 		//화면에서 게시글 번호 받아오기
 		String pageNum = req.getParameter("crtPage");
@@ -190,7 +168,7 @@ public class MainServiceImpl implements MainService{
 	//게시판 수정 처리
 	@Override
 	public void boardUpdateAction(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 수정 처리");
+		logger.info("서비스 - 게시판 수정 처리");
 		
 		//dto 주머니 생성
 		BoardDto dto = new BoardDto();
@@ -217,7 +195,7 @@ public class MainServiceImpl implements MainService{
 	//게시판 삭제 처리
 	@Override
 	public void boardDeleteAction(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 삭제 처리");
+		logger.info("서비스 - 게시판 삭제 처리");
 		
 		//화면에서 게시글 번호 받아오기
 		String pageNum = req.getParameter("crtPage");
@@ -226,7 +204,7 @@ public class MainServiceImpl implements MainService{
 		
 		//받아온 게시글 번호를 통해 db에 보낸다
 		int deleteCnt = dao.boardDeleteAction(board_no);
-		System.out.println("삭제 deleteCnt : " + deleteCnt);
+		logger.info("삭제 deleteCnt : " + deleteCnt);
 		
 		//불러온 값을 jsp에 전달한다
 		model.addAttribute("deleteCnt", deleteCnt);
@@ -236,7 +214,7 @@ public class MainServiceImpl implements MainService{
 	//게시판 검색
 	@Override
 	public void boardSearch(HttpServletRequest req, Model model) {
-		System.out.println("서비스 - 게시판 검색");
+		logger.info("서비스 - 게시판 검색");
 		
 		//화면에서 검색어 입력 받아오기
 		String pageNum = req.getParameter("pageNum");
@@ -255,7 +233,7 @@ public class MainServiceImpl implements MainService{
 			map.put("searchContent", searchContent);
 			list=dao.boardSearch(map);
 		}
-		System.out.println("list : " + list);
+		logger.info("list : " + list);
 		
 		//결과값 jsp에 전달
 		model.addAttribute("list", list);

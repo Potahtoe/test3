@@ -4,14 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.security.test3.dao.MainDao">
 	<!-- 시큐리티 -->
-  	<!-- ID 중복확인 처리 --> <!-- resultType="Integer"일 경우 사용-->
-  	<select id="idCheck" parameterType="String" resultType="int"> <!-- public int idCheck(String strId) {} -->
+  	<!-- 아이디 확인 -->
+  	<select id="idCheck" parameterType="String" resultType="int"> 
   		select	count(*)
   		from	member_tbl
   		where	mem_id = #{strId}
-  		<!-- resultType="Integer"이면  COUNT(*)로 형을 맞춰줘야 한다. -->
   	</select>
-  	<!-- 시큐리티 - pwdCheck -->
+  	<!-- 비밀번호 확인 -->
   	<select id="pwdCheck" parameterType="String" resultType="String">
   		select	mem_pwd
   		from	member_tbl

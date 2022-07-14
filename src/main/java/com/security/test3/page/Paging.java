@@ -1,6 +1,12 @@
 package com.security.test3.page;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 public class Paging {
+	private static final Logger logger = LoggerFactory.getLogger(Paging.class);
+	
 	private int pageSize=10; //화면에 보여질 게시글의 갯수를 지정
 	private int count=0; // 전체글의 갯수를 저장하는 변수
 	private int number=0; //페이지번호
@@ -19,6 +25,7 @@ public class Paging {
 	private int next; //다음
 	
 	public Paging() {}
+
 	public Paging(String pageNum) {
 		//맨 처음 boardList.jsp를 클릭하거나, 
 		//수정 삭제 등 다른 게시글에서 페이지로 넘어올 때 pageNum이 없는 경우 
@@ -30,15 +37,15 @@ public class Paging {
 		this.pageNum=pageNum;
 		
 		currentPage = Integer.parseInt(pageNum);
-		System.out.println("currentPage : " + currentPage);
+		logger.info("currentPage : " + currentPage);
 	}
 	public void setTotalCount(int count){
 		this.count=count;
 		
 		startRow = (currentPage -1)* pageSize +1;
 		endRow = currentPage * pageSize;
-		System.out.println("endRow" + endRow);
-		System.out.println("startRow" + startRow);
+		logger.info("endRow" + endRow);
+		logger.info("startRow" + startRow);
 		
 		this.number=count -(currentPage -1) * pageSize;
 		
@@ -49,20 +56,20 @@ public class Paging {
 	public void pageCalculator() {
 		if(count>0) {
 			pageCount= count/pageSize + (count % pageSize ==0?0:1);
-			System.out.println("pageCount : " + pageCount);
+			logger.info("pageCount : " + pageCount);
 			startPage=1;
 			if(currentPage %10 !=0) {
 				startPage=(int)(currentPage/10)*10+1;
 			}else {
 				startPage = ((int)(currentPage/10)-1)*10 +1;
 			}
-			System.out.println("startPage : " + startPage);
+			logger.info("startPage : " + startPage);
 			
 			pageBlock = 10;
 			endPage= startPage + pageBlock -1;
 			
 			if(endPage>pageCount) endPage=pageCount;
-			System.out.println("endPage : " + endPage);
+			logger.info("endPage : " + endPage);
 
 			
 			//이전
@@ -70,8 +77,8 @@ public class Paging {
 			//다음
 			if(endPage < pageCount) next = startPage+10;
 			
-			System.out.println("prev : " + prev);
-			System.out.println("next : " + next);
+			logger.info("prev : " + prev);
+			logger.info("next : " + next);
 			
 		}
 	}
