@@ -41,7 +41,6 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		request.getSession().setAttribute("authority", authority);
 		
 		if(authority.equals("ROLE_ADMIN")) {
-			//int grade=1;
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.do");
 			dispatcher.forward(request, response);
 		}else {

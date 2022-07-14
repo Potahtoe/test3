@@ -38,18 +38,21 @@ public class MainServiceImpl implements MainService{
 		//dto 바구니 생성
 		MemberDto dto = new MemberDto();
 		
-		//jsp에서 넘긴 id와 pwd 값을 dto에 담는다
+		//jsp에서 넘긴 id 값 받아서 dto에 저장
 		dto.setMem_id(req.getParameter("mem_id"));
+		
+		//jsp에서 넘긴 비밀번호 값 받아오기
 		String mem_pwd = req.getParameter("mem_pwd");
+		//비밀번호 암호화해서 변수에 담기
 		String encryptPassword =passwordEncoder.encode(mem_pwd);
+		//암호화 된 비밀번호를 dto에 담기
 		dto.setMem_pwd(encryptPassword);
-		//enabled값
-		String enabled = req.getParameter("enabled");
-		dto.setEnabled(enabled);
+		
+		//enabled값 받아서 dto에 저장
+		dto.setEnabled(req.getParameter("enabled"));
 
-		//dao를 통해 db에 저장
+		//위의 값들을 dao를 통해 db에 저장
 		int insertCnt = dao.signInAction(dto);
-		logger.info("insertCnt : " + insertCnt);
 		
 		//jsp로 결과 보내주기(signInAction.jsp)
 		model.addAttribute("insertCnt", insertCnt);
@@ -62,11 +65,13 @@ public class MainServiceImpl implements MainService{
 	public void updateGrade(HttpServletRequest req, Model model) {
 		logger.info("서비스 - 권한 업데이트");
 		
+		//enabled, mem_id 값 불러오기
 		String enabled = req.getParameter("enabled");
 		String mem_id = req.getParameter("mem_id");
 		
+		//불러온 enabled 값이 1이면
 		if(enabled.equals("1")) {
-			logger.info("enabled : " + enabled.equals("1"));
+			//mem_id 값을 가지고 매퍼에 가서 authority 업데이트 해오기
 			int updateCnt = dao.updateGrade(mem_id);
 			model.addAttribute("updateCnt", updateCnt);
 		}

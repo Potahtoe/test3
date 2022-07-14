@@ -29,11 +29,13 @@ public class UserAuthenticationService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String mem_id) throws UsernameNotFoundException {
 		logger.info("<<<UserAuthenticationService - loadUserByUsername 진입 >>>");
+		//db에 있는 정보 중 id가 일치하는 것을 가져온다.
 		MemberDto dto = sqlSession.selectOne("com.security.test3.dao.MainDao.selectId", mem_id);
 		
 		//로그인 인증 실패 시 인위적으로 예외 생성해서 던진다.
 		if(dto ==null) throw new UsernameNotFoundException(mem_id);
 		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
+		//authority 정보를 담는다
 		authority.add(new SimpleGrantedAuthority(dto.getAuthority()));
 		
 		//UserVO 클래스 먼저 생성 후 return 

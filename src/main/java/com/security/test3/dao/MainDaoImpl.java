@@ -24,30 +24,40 @@ public class MainDaoImpl implements MainDao{
 	//아이디 체크
 	@Override
 	public int idCheck(String strId) {
+		logger.info("dao - 아이디 체크");
+		
 		MainDao dao = sqlSession.getMapper(MainDao.class);
 		return dao.idCheck(strId);
 	}
 	//비밀번호 체크
 	@Override
 	public String pwdCheck(String strId) {
+		logger.info("dao - 비밀번호 체크");
+		
 		MainDao dao = sqlSession.getMapper(MainDao.class);
 		return dao.pwdCheck(strId);
 	}
 	//로그인 체크(db에 있는 아이디 불러오기)
 	@Override
 	public MemberDto selectId(String strId) {
+		logger.info("dao - 로그인 체크");
+		
 		MainDao dao = sqlSession.getMapper(MainDao.class);
 		return dao.selectId(strId);
 	}
 	//권한 불러오기
 	@Override
 	public String authorityCheck() {
+		logger.info("dao - 권한 불러오기");
+		
 		MainDao dao = sqlSession.getMapper(MainDao.class);
 		return dao.authorityCheck();
 	}
 	//권한 업데이트
 	@Override
 	public int updateGrade(String mem_id) {
+		logger.info("dao - 권한 업데이트");
+		
 		MainDao dao = sqlSession.getMapper(MainDao.class);
 		return dao.updateGrade(mem_id);
 	}
