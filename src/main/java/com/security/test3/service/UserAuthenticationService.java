@@ -33,7 +33,7 @@ public class UserAuthenticationService implements UserDetailsService{
 		MemberDto dto = sqlSession.selectOne("com.security.test3.dao.MainDao.selectId", mem_id);
 		
 		//로그인 인증 실패 시 인위적으로 예외 생성해서 던진다.
-		if(dto ==null) throw new UsernameNotFoundException(mem_id);
+		if(dto == null) throw new UsernameNotFoundException(mem_id);
 		List<GrantedAuthority> authority = new ArrayList<GrantedAuthority>();
 		//authority 정보를 담는다
 		authority.add(new SimpleGrantedAuthority(dto.getAuthority()));

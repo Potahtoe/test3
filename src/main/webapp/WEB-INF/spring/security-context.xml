@@ -4,10 +4,16 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-		
+	<!--
+		auto-config="true" : 설정만으로 로그인 페이지/ http 기본인증/ 로그아웃 기능을 제공
+		use-expressions="true": SpEL을 사용한다는 뜻
+		SpEL: hasRole 등의 표현식을 사용하기 위해  -->	
 	<security:http auto-config='true' use-expressions="true">
-	    <security:intercept-url pattern="/member/**" access="permitAll" />
-	    <security:intercept-url pattern="/board/**" access="hasRole('ROLE_ADMIN')" />
+	
+	<!-- /*:바로 하위에 있는 모든 경로 매핑
+		/**의 차이: 모든 하위에 있는 경로 매핑 -->
+	    <security:intercept-url pattern="/login.do" access="permitAll" />
+	    <security:intercept-url pattern="/boardList.do" access="hasRole('ROLE_ADMIN')" />
 	    
 	    <!-- 로그인폼 -->
 		<security:form-login login-page="/login.do" 

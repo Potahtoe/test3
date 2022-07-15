@@ -33,17 +33,25 @@ public class UserLoginSuccessHandler implements AuthenticationSuccessHandler {
 		logger.info("<<<UserLoginSuccessHandler - onAuthenticationSuccessHandler 진입 >>>");
 		
 		UserVO vo =(UserVO)authentication.getPrincipal();
+		logger.info("vo :" + vo);
+		/*
+		 * vo :com.security.test3.dto.UserVO@2e0880: Username: bbbb; Password: [PROTECTED]; Enabled: true; 
+		 * AccountNonExpired: true; credentialsNonExpired: true;
+		 * AccountNonLocked: true; Granted Authorities: ROLE_ADMIN
+		 */
 		logger.info("UserVO : " + vo.getUsername());
 		
 		String authority = sqlSession.selectOne("com.security.test3.dao.MainDao.authorityCheck", authentication.getName());
 		
-		request.getSession().setAttribute("sessionID", authentication.getName()); //세션추가
-		request.getSession().setAttribute("authority", authority);
+		/*
+		 * request.getSession().setAttribute("sessionID", authentication.getName());
+		 * //세션추가 request.getSession().setAttribute("authority", authority);
+		 */
 		
 		if(authority.equals("ROLE_ADMIN")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/boardList.do");
 			dispatcher.forward(request, response);
-		}else {
+		} else {
 			request.setAttribute("errorMsg", "접근 권한이 없습니다.");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login.do");
 			dispatcher.forward(request, response);

@@ -6,7 +6,7 @@
 	<!-- 시큐리티 -->
   	<!-- 아이디 확인 -->
   	<select id="idCheck" parameterType="String" resultType="int"> 
-  		select	count(*)
+  		select	count(mem_id)
   		from	member_tbl
   		where	mem_id = #{strId}
   	</select>
@@ -18,7 +18,10 @@
   	</select>
 	<!-- 로그인 체크 -->
 	<select id="selectId" parameterType="String" resultType="com.security.test3.dto.MemberDto">
-		select 	*
+		select 	mem_id
+				,mem_pwd
+				,enabled
+				,authority
 		from	member_tbl
 		where	mem_id = #{mem_id}
 	</select>
@@ -55,7 +58,7 @@
 	<!-- 로그인 -->
 	<!-- 로그인 확인 -->
 	<select id="idPwdCheck" parameterType="java.util.Map" resultType="int">
-		select	count(*)
+		select	count(mem_id)
 		from	member_tbl
 		where	mem_id = #{strId}
 		and		mem_pwd = #{strPwd}
@@ -64,7 +67,7 @@
 	<!-- 게시판 -->
 	<!-- 게시글 수 -->
 	<select id="boardCnt" resultType="int">
-		select	count(*)
+		select	count(board_no)
 		from	board_tbl
 	</select>
 	
@@ -111,14 +114,24 @@
 	
 	<!-- 게시판 상세 조회 -->
 	<select id="boardDetail" parameterType="int" resultType="com.security.test3.dto.BoardDto">
-		select	* 
+		select	board_no
+				,board_title
+				,board_contents
+				,board_writer
+				,read_cnt
+				,in_date
 		from	board_tbl 
 		where	board_no = #{board_no}
 	</select>
 	
 	<!-- 게시판 수정 화면 -->
 	<select id="boardUpdate" parameterType="int" resultType="com.security.test3.dto.BoardDto">
-		select	*
+		select	board_no
+				,board_title
+				,board_contents
+				,board_writer
+				,read_cnt
+				,in_date
 		from	board_tbl
 		where	board_no = #{board_no}
 	</select>
@@ -140,18 +153,21 @@
 	
 	<!-- 검색글 수 -->
  	<select id="searchCnt" parameterType="String" resultType="int">
-		select	count(*)
+		select	count(board_no)
 		from	board_tbl
-		where	board_title 
-		like concat('%',#{searchContent},'%')
+		where	board_title like concat('%',#{searchContent},'%')
 	</select>
 	
 	<!-- 게시판 검색 -->
 	<select id="boardSearch" parameterType="java.util.Map" resultType="com.security.test3.dto.BoardDto">
-		select	*
+		select	board_no
+				,board_title
+				,board_contents
+				,board_writer
+				,read_cnt
+				,in_date
 		from	board_tbl 
-		where	board_title
-		like concat('%',#{searchContent},'%')
+		where	board_title like concat('%',#{searchContent},'%')
 		order by board_no desc
 		limit 	10
 		offset #{start}
